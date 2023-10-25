@@ -6,7 +6,7 @@ The main purpose of the Application Programming Interface developed is to manipu
 
 ## 💻 Technologies used
 * [TypeScript](https://www.typescriptlang.org/pt/docs/): programming language developed to add advanced features to JavaScript, such as static typing and interfaces
-* [Node.js](https://nodejs.org/pt-br/docs): allows the execution of JavaScript code outside the browser
+* [Node.js](https://nodejs.org/en/docs): allows the execution of JavaScript code outside the browser
 * [Express.js](https://expressjs.com/pt-br/): optimize the construction of web applications and APIs
 * [MongoDB](https://www.mongodb.com/docs/): document-oriented NoSQL database management
 
