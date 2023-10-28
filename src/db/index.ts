@@ -2,7 +2,8 @@ import { MongoClient } from 'mongodb';
 import { config } from 'dotenv';
 config();
 
-const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+//const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+const uri = `mongodb://admin:caruseradmin@127.0.0.1:27017/car_factory`;
 
 const getMongoConnection = async (): Promise<MongoClient> => {
     const client = new MongoClient(uri);
