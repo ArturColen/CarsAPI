@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongodb_1 = require("mongodb");
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
-const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+//const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+const uri = `mongodb://admin:caruseradmin@127.0.0.1:27017/car_factory`;
 const getMongoConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new mongodb_1.MongoClient(uri);
     const connection = yield client.connect();
