@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCarController = exports.updateCarController = exports.createCarController = exports.findCarByName = exports.findAllCarsController = void 0;
 const db_1 = __importDefault(require("../db"));
+const mongodb_1 = require("mongodb");
 const findAllCarsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let conn = null;
     try {
@@ -58,9 +59,42 @@ const createCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
 });
 exports.createCarController = createCarController;
 const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let conn = null;
     try {
+        conn = yield (0, db_1.default)();
+        const db = conn.db();
+        const carCollection = db.collection("car");
+        const id = req.params.id;
+        if (id.toString().trim() == "" || id == null || id == undefined || typeof id != 'string') {
+            throw new Error("Id do automóvel inválido!");
+        }
+        const objId = new mongodb_1.ObjectId(id);
+        const update = yield carCollection.updateOne({
+            _id: objId
+        }, {
+            $set: {
+                nome: "City",
+                preco: 100000,
+                cor: "Prata",
+                fabricante: "Honda",
+                categoria: "Sedan",
+                ano_lancamento: 2023,
+                assentos: 5,
+                potencia: 125,
+                aro: 13,
+                versao: "EXL",
+                peso: 120,
+                abastecimento: "flex"
+            }
+        });
+        const result = yield carCollection.findOne({ _id: objId });
+        res.status(200).json({ message: result });
     }
     catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+    finally {
+        conn === null || conn === void 0 ? void 0 : conn.close();
     }
 });
 exports.updateCarController = updateCarController;

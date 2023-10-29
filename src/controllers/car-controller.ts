@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import getMongoConnection from '../db';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 export const findAllCarsController = async (req: Request, res: Response) => {
     let conn : MongoClient | null = null
@@ -49,11 +49,46 @@ export const createCarController = async (req: Request, res: Response) => {
 };
 
 export const updateCarController = async (req: Request, res: Response) => {
+    let conn : MongoClient | null = null
     try {
+        conn = await getMongoConnection()
+        const db = conn.db()
+        const carCollection = db.collection("car")
 
+        const id = req.params.id
+
+        if (id.toString().trim() == "" || id == null || id == undefined || typeof id != 'string') {
+            throw new Error("Id do automóvel inválido!")
+        }
+
+        const objId = new ObjectId(id)
+        const update = await carCollection.updateOne({
+            _id: objId
+        }, {
+            $set: {
+                nome: "City",
+                preco: 100000,
+                cor: "Prata",
+                fabricante: "Honda",
+                categoria: "Sedan",
+                ano_lancamento: 2023,
+                assentos: 5,
+                potencia: 125,
+                aro: 13,
+                versao: "EXL",
+                peso: 120,
+                abastecimento: "flex"
+            }
+        })
+
+        const result = await carCollection.findOne({_id: objId})
+        res.status(200).json({message: result})
     }
     catch (err) {
-
+        res.status(404).json({message: (err as Error).message})
+    }
+    finally {
+        conn?.close()
     }
 };
 
