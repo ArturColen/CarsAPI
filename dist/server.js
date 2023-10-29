@@ -8,6 +8,7 @@ const cors_middlewares_js_1 = require("./middlewares/cors-middlewares.js");
 const cars_route_js_1 = __importDefault(require("./routes/cars-route.js"));
 const port = 3000;
 const app = (0, express_1.default)();
+app.use(express_1.default.json());
 (0, cors_middlewares_js_1.configureCORS)(app);
 app.use('/cars', cars_route_js_1.default);
 app.listen(port, () => {

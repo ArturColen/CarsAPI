@@ -4,6 +4,7 @@ import carRouter from './routes/cars-route.js';
 
 const port = 3000;
 const app = express();
+app.use(express.json());
 
 configureCORS(app);
 
