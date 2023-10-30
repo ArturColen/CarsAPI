@@ -35,12 +35,25 @@ exports.findAllCarsController = findAllCarsController;
 const findCarByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let conn = null;
     try {
+        const nome = req.params.nome;
+        console.log("Tipo de nome:", typeof nome);
+        if (nome === undefined) {
+            throw new Error("O parâmetro 'nome' não foi fornecido na consulta.");
+        }
+        console.log("Tipo de nome:", typeof nome);
+        if (typeof nome != "string") {
+            throw new Error("Informe corretamente o nome do carro");
+        }
         conn = yield (0, db_1.default)();
         const db = conn.db();
-        const carCollection = db.collection("car");
-        const nome = req.params.nome;
+        const carCollection = yield db.collection("car");
         const result = yield carCollection.findOne({ nome: nome });
-        res.status(200).json({ message: result });
+        if (result === null) {
+            res.status(404).json({ message: "Carro não encontrado" });
+        }
+        else {
+            res.status(200).json({ message: result });
+        }
     }
     catch (err) {
         res.status(404).json({ message: err.message });
