@@ -8,7 +8,6 @@ export const findAllCarsController = async (req: Request, res: Response) => {
         conn = await getMongoConnection()
         const db = conn.db()
         const carCollection = db.collection("car")
-
         const result = await carCollection.find().toArray()
         res.status(200).json({ Cars: result })
     }
@@ -23,13 +22,24 @@ export const findAllCarsController = async (req: Request, res: Response) => {
 export const findCarByName = async (req: Request, res: Response) => {
     let conn: MongoClient | null = null
     try {
+        const nome = req.params.nome
+        console.log("Tipo de nome:", typeof nome);
+        if (nome === undefined) {
+            throw new Error("O parâmetro 'nome' não foi fornecido na consulta.");
+        }
+        console.log("Tipo de nome:", typeof nome);
+        if (typeof nome != "string") {
+            throw new Error("Informe corretamente o nome do carro na URL")
+        }
         conn = await getMongoConnection()
         const db = conn.db()
-        const carCollection = db.collection("car")
-
-        const nome = req.params.nome
+        const carCollection = await db.collection("car")
         const result = await carCollection.findOne({ nome: nome })
-        res.status(200).json({ message: result })
+        if (result === null) {
+            res.status(404).json({ message: "Carro não encontrado" });
+        } else {
+            res.status(200).json({ message: result });
+        }
     }
     catch (err) {
         res.status(404).json({ message: (err as Error).message })
