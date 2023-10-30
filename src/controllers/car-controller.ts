@@ -41,7 +41,7 @@ export const findCarByName = async (req: Request, res: Response) => {
 
 export const createCarController = async (req: Request, res: Response) => {
     try {
-        //db.carro.insertOne({nome: "Kwdi", preco: 70000, cor: "Vermelho", fabricante: "Renault", categoria: "Compacto", ano_lancamento: 2018, assentos: 5, potencia: 75, aro: 13, versao: "Outsider", peso: 100, abastecimento: "flex"})
+        
     }
     catch (err) {
 
