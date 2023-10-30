@@ -42,7 +42,7 @@ const findCarByName = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         console.log("Tipo de nome:", typeof nome);
         if (typeof nome != "string") {
-            throw new Error("Informe corretamente o nome do carro");
+            throw new Error("Informe corretamente o nome do carro na URL");
         }
         conn = yield (0, db_1.default)();
         const db = conn.db();
