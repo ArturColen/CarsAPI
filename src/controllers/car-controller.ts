@@ -29,7 +29,7 @@ export const findCarByName = async (req: Request, res: Response) => {
         }
         console.log("Tipo de nome:", typeof nome);
         if (typeof nome != "string") {
-            throw new Error("Informe corretamente o nome do carro")
+            throw new Error("Informe corretamente o nome do carro na URL")
         }
         conn = await getMongoConnection()
         const db = conn.db()
