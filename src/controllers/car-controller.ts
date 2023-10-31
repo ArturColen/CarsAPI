@@ -74,11 +74,11 @@ export const findCarByName = async (req: Request, res: Response) => {
 export const createCarController = async (req: Request, res: Response) => {
     try {
         const carData = req.body;
-        const newId = new ObjectId();
-        const newIdString = newId.toString();
+        //const newId = new ObjectId();
+        //const newIdString = newId.toString();
 
         const car = new Carro(
-            newIdString,
+            //newId,
             carData.nome,
             carData.preco,
             carData.cor,
@@ -101,7 +101,7 @@ export const createCarController = async (req: Request, res: Response) => {
             ...car,
         };
 
-        const result = await carCollection.insertOne(carDocument);
+        const result = await carCollection.insertOne(removePrefixFromKeys(carDocument));
 
         const insertedId = result.insertedId;
         const insertedCar = await carCollection.findOne({ _id: insertedId });
@@ -125,20 +125,7 @@ export const updateCarController = async (req: Request, res: Response) => {
         const carCollection = db.collection("cars")
 
         const id = req.params.id
-
-        const data = {
-            nome: req.body.nome,
-            preco: req.body.preco,
-            fabricante: req.body.fabricante,
-            categoria: req.body.categoria,
-            ano_lancamento: req.body.ano_lancamento,
-            assentos: req.body.assentos,
-            potencia: req.body.potencia,
-            aro: req.body.aro,
-            versao: req.body.versao,
-            peso: req.body.peso,
-            abastecimento: req.body.abastecimento
-        }
+        const data = req.body
 
         if (id.toString().trim() === "" || id === null || id === undefined || typeof id !== 'string') {
             throw new Error("Id do automóvel inválido!")
@@ -148,6 +135,9 @@ export const updateCarController = async (req: Request, res: Response) => {
         }
         else if (data.preco.toString().trim() === "" || data.preco === null || data.preco === undefined || typeof data.preco !== 'number') {
             throw new Error("Preço do automóvel inválido!")
+        }
+        else if (data.cor.toString().trim() === "" || data.cor === null || data.cor === undefined || typeof data.cor !== 'string') {
+            throw new Error("Cor do automóvel inválida!")
         }
         else if (data.fabricante.toString().trim() === "" || data.fabricante === null || data.fabricante === undefined || typeof data.fabricante !== 'string') {
             throw new Error("Fabricante do automóvel inválido!")
@@ -179,14 +169,34 @@ export const updateCarController = async (req: Request, res: Response) => {
 
         const objId = new ObjectId(id);
 
+        const carro = new Carro(
+            //objId, 
+            data.nome, 
+            data.preco, 
+            data.cor, 
+            data.fabricante, 
+            data.categoria, 
+            data.ano_lancamento, 
+            data.assentos, 
+            data.potencia, 
+            data.aro, 
+            data.versao, 
+            data.peso, 
+            data.abastecimento
+        )
+
         await carCollection.updateOne({
                 _id: objId
             }, {
-                $set: data
+                $set: removePrefixFromKeys(carro)
             }
         );
 
         const result = await carCollection.findOne({ _id: objId });
+
+        if (result === undefined || result === null) {
+            throw new Error("Carro não encontrado! Por favor, verifique se o ID inserido está correto!")
+        }
 
         const carWithoutPrefix = removePrefixFromKeys(result);
         res.status(200).json({

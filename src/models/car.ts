@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export default class Carro {
-    private _id: string;
+    //private _id: ObjectId;
     private _nome: string;
     private _preco: number;
     private _cor: string;
@@ -13,8 +15,8 @@ export default class Carro {
     private _peso: number;
     private _abastecimento: string;
 
-    constructor(id: string, nome: string, preco: number, cor: string, fabricante: string, categoria: string, anoLancamento: number, assentos: number, potencia: number, aro: number, versao: string, peso: number, abastecimento: string) {
-        this._id = id;
+    constructor(nome: string, preco: number, cor: string, fabricante: string, categoria: string, anoLancamento: number, assentos: number, potencia: number, aro: number, versao: string, peso: number, abastecimento: string) {
+        //this._id = id;
         this._nome = nome;
         this._preco = preco;
         this._cor = cor;
@@ -29,9 +31,9 @@ export default class Carro {
         this._abastecimento = abastecimento;
     }
 
-    get id() {
-        return this._id;
-    }
+    // get id() {
+    //     return this._id;
+    // }
 
     get nome() {
         return this._nome;
