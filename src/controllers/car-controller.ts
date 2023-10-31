@@ -39,7 +39,11 @@ export const findCarByName = async (req: Request, res: Response) => {
         }
 
         if (typeof nome !== "string") {
-            throw new Error("Informe corretamente o nome do carro");
+            throw new Error("Informe corretamente o parâmetro 'nome' do carro");
+        }
+
+        if (nome === null || nome === undefined) {
+            throw new Error("O parâmetro 'nome' não foi fornecido na consulta.");
         }
 
         conn = await getMongoConnection();
