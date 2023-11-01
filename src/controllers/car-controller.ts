@@ -102,44 +102,49 @@ export const createCarController = async (req: Request, res: Response) => {
             carData.abastecimento
         );
 
-        if (newIdString.trim() === "" || newIdString === null || newIdString === undefined || typeof newIdString !== 'string') {
-            throw new Error("Favor inserir o id do automóvel de forma válida.")
-        }
-        else if (carData.nome.toString().trim() === "" || carData.nome === null || carData.nome === undefined || typeof carData.nome !== 'string') {
-            throw new Error("Favor inserir o nome do automóvel de forma válida.")
-        }
-        else if (carData.preco.toString().trim() === "" || carData.preco === null || carData.preco === undefined || typeof carData.preco !== 'number') {
-            throw new Error("Favor inserir o preço do automóvel de forma válida")
-        }
-        else if (carData.cor.toString().trim() === "" || carData.cor === null || carData.cor === undefined || typeof carData.cor !== 'string') {
-            throw new Error("Favor inserir a cor do automóvel de forma válida")
-        }
-        else if (carData.fabricante.toString().trim() === "" || carData.fabricante === null || carData.fabricante === undefined || typeof carData.fabricante !== 'string') {
-            throw new Error("Favor inserir o fabricante de automóveis de forma válida.")
-        }
-        else if (carData.categoria.toString().trim() === "" || carData.categoria === null || carData.categoria === undefined || typeof carData.categoria !== 'string') {
-            throw new Error("Favor inserir a categoria do automóveis de forma válida.")
-        }
-        else if (carData.ano_lancamento.toString().trim() === "" || carData.ano_lancamento === null || carData.ano_lancamento === undefined || typeof carData.ano_lancamento !== 'number') {
-            throw new Error("Favor inserir o ano de lançamento do automóvel de forma válida.")
-        }
-        else if (carData.assentos.toString().trim() === "" || carData.assentos === null || carData.assentos === undefined || typeof carData.assentos !== 'number') {
-            throw new Error("Favor inserir a quantidade de assentos do automóvel de forma válida.")
-        }
-        else if (carData.potencia.toString().trim() === "" || carData.potencia === null || carData.potencia === undefined || typeof carData.potencia !== 'number') {
-            throw new Error("Favor inserir a potência do automóvel de forma válida.")
-        }
-        else if (carData.aro.toString().trim() === "" || carData.aro === null || carData.aro === undefined || typeof carData.aro !== 'number') {
-            throw new Error("Favor inserir o aro do automóvelde forma válida.")
-        }
-        else if (carData.versao.toString().trim() === "" || carData.versao === null || carData.versao === undefined || typeof carData.versao !== 'string') {
-            throw new Error("Favor inserir a versão do automóvel de forma válida.")
-        }
-        else if (carData.peso.toString().trim() === "" || carData.peso === null || carData.peso === undefined || typeof carData.peso !== 'number') {
-            throw new Error("Favor inserir o peso do automóvel de forma válida.")
-        }
-        else if (carData.abastecimento.toString().trim() === "" || carData.abastecimento === null || carData.abastecimento === undefined || typeof carData.abastecimento !== 'string') {
-            throw new Error("Favor inserir o tipo bastecimento do automóvel de forma válida.")
+        try{
+            if (newIdString.trim() === "" || newIdString === null || newIdString === undefined || typeof newIdString !== 'string') {
+                throw new Error("Favor inserir o id do automóvel de forma válida.")
+            }
+            else if (carData.nome.toString().trim() === "" || carData.nome === null || carData.nome === undefined || typeof carData.nome !== 'string') {
+                throw new Error("Favor inserir o nome do automóvel de forma válida.")
+            }
+            else if (carData.preco.toString().trim() === "" || carData.preco === null || carData.preco === undefined || typeof carData.preco !== 'number') {
+                throw new Error("Favor inserir o preço do automóvel de forma válida")
+            }
+            else if (carData.cor.toString().trim() === "" || carData.cor === null || carData.cor === undefined || typeof carData.cor !== 'string') {
+                throw new Error("Favor inserir a cor do automóvel de forma válida")
+            }
+            else if (carData.fabricante.toString().trim() === "" || carData.fabricante === null || carData.fabricante === undefined || typeof carData.fabricante !== 'string') {
+                throw new Error("Favor inserir o fabricante de automóveis de forma válida.")
+            }
+            else if (carData.categoria.toString().trim() === "" || carData.categoria === null || carData.categoria === undefined || typeof carData.categoria !== 'string') {
+                throw new Error("Favor inserir a categoria do automóveis de forma válida.")
+            }
+            else if (carData.ano_lancamento.toString().trim() === "" || carData.ano_lancamento === null || carData.ano_lancamento === undefined || typeof carData.ano_lancamento !== 'number') {
+                throw new Error("Favor inserir o ano de lançamento do automóvel de forma válida.")
+            }
+            else if (carData.assentos.toString().trim() === "" || carData.assentos === null || carData.assentos === undefined || typeof carData.assentos !== 'number') {
+                throw new Error("Favor inserir a quantidade de assentos do automóvel de forma válida.")
+            }
+            else if (carData.potencia.toString().trim() === "" || carData.potencia === null || carData.potencia === undefined || typeof carData.potencia !== 'number') {
+                throw new Error("Favor inserir a potência do automóvel de forma válida.")
+            }
+            else if (carData.aro.toString().trim() === "" || carData.aro === null || carData.aro === undefined || typeof carData.aro !== 'number') {
+                throw new Error("Favor inserir o aro do automóvelde forma válida.")
+            }
+            else if (carData.versao.toString().trim() === "" || carData.versao === null || carData.versao === undefined || typeof carData.versao !== 'string') {
+                throw new Error("Favor inserir a versão do automóvel de forma válida.")
+            }
+            else if (carData.peso.toString().trim() === "" || carData.peso === null || carData.peso === undefined || typeof carData.peso !== 'number') {
+                throw new Error("Favor inserir o peso do automóvel de forma válida.")
+            }
+            else if (carData.abastecimento.toString().trim() === "" || carData.abastecimento === null || carData.abastecimento === undefined || typeof carData.abastecimento !== 'string') {
+                throw new Error("Favor inserir o tipo bastecimento do automóvel de forma válida.")
+            }
+        }catch (err){
+            res.status(400).json({message: (err as Error).message});
+            return;
         }
 
         const carDocument = {
