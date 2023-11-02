@@ -101,12 +101,9 @@ export const createCarController = async (req: Request, res: Response) => {
             carData.peso,
             carData.abastecimento
         );
-
-        try{
-            if (newIdString.trim() === "" || newIdString === null || newIdString === undefined || typeof newIdString !== 'string') {
-                throw new Error("Favor inserir o id do automóvel de forma válida.")
-            }
-            else if (carData.nome.toString().trim() === "" || carData.nome === null || carData.nome === undefined || typeof carData.nome !== 'string') {
+        
+        try{    
+            if (carData.nome.toString().trim() === "" || carData.nome === null || carData.nome === undefined || typeof carData.nome !== 'string') {
                 throw new Error("Favor inserir o nome do automóvel de forma válida.")
             }
             else if (carData.preco.toString().trim() === "" || carData.preco === null || carData.preco === undefined || typeof carData.preco !== 'number') {
@@ -140,7 +137,7 @@ export const createCarController = async (req: Request, res: Response) => {
                 throw new Error("Favor inserir o peso do automóvel de forma válida.")
             }
             else if (carData.abastecimento.toString().trim() === "" || carData.abastecimento === null || carData.abastecimento === undefined || typeof carData.abastecimento !== 'string') {
-                throw new Error("Favor inserir o tipo bastecimento do automóvel de forma válida.")
+                throw new Error("Favor inserir o tipo do abastecimento do automóvel de forma válida.")
             }
         }catch (err){
             res.status(400).json({message: (err as Error).message});
@@ -164,9 +161,11 @@ export const createCarController = async (req: Request, res: Response) => {
     catch (err) {
         res.status(500).json({message: (err as Error).message});
         return;
-    } finally {
+    }
+    /*finally {
         conn?.close();
     }
+    */
 };
 
 export const updateCarController = async (req: Request, res: Response) => {
