@@ -180,10 +180,10 @@ export const updateCarController = async (req: Request, res: Response) => {
         const objId = new ObjectId(id);
 
         await carCollection.updateOne({
-                _id: objId
-            }, {
-                $set: data
-            }
+            _id: objId
+        }, {
+            $set: data
+        }
         );
 
         const result = await carCollection.findOne({ _id: objId });
@@ -204,10 +204,27 @@ export const updateCarController = async (req: Request, res: Response) => {
 };
 
 export const deleteCarController = async (req: Request, res: Response) => {
-    try {
+    let conn: MongoClient | null = null
 
+    try {
+        conn = await getMongoConnection();
+        const db = conn.db();
+        const carCollection = db.collection("cars");
+        const idCar = req.params.id;
+
+        carCollection.deleteOne({ _id: idCar }, (err, deletedCar) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send('Erro na tentativa de exclusão do carro!');
+            } else if (!deletedCar) {
+                res.status(404).send('Carro não encontrado!');
+            } else {
+                res.status(200).send('Exclusão feita com sucesso!');
+            }
+        });
     }
     catch (err) {
-
+        res.status(500).send('Erro na tentativa de exclusão do carro!');
+        console.log(err);
     }
 };
