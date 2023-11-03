@@ -79,14 +79,16 @@ exports.findCarByName = findCarByName;
 const createCarController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const carData = req.body;
-        const newId = new mongodb_1.ObjectId();
-        const newIdString = newId.toString();
-        const car = new car_1.default(newIdString, carData.nome, carData.preco, carData.cor, carData.fabricante, carData.categoria, carData.anoLancamento, carData.assentos, carData.potencia, carData.aro, carData.versao, carData.peso, carData.abastecimento);
+        //const newId = new ObjectId();
+        //const newIdString = newId.toString();
+        const car = new car_1.default(
+        //newId,
+        carData.nome, carData.preco, carData.cor, carData.fabricante, carData.categoria, carData.anoLancamento, carData.assentos, carData.potencia, carData.aro, carData.versao, carData.peso, carData.abastecimento);
         const conn = yield (0, db_1.default)();
         const db = conn.db();
         const carCollection = db.collection("cars");
         const carDocument = Object.assign({}, car);
-        const result = yield carCollection.insertOne(carDocument);
+        const result = yield carCollection.insertOne((0, remove_prefix_keys_1.removePrefixFromKeys)(carDocument));
         const insertedId = result.insertedId;
         const insertedCar = yield carCollection.findOne({ _id: insertedId });
         res.status(201).json({
@@ -107,19 +109,7 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         const db = conn.db();
         const carCollection = db.collection("cars");
         const id = req.params.id;
-        const data = {
-            nome: req.body.nome,
-            preco: req.body.preco,
-            fabricante: req.body.fabricante,
-            categoria: req.body.categoria,
-            ano_lancamento: req.body.ano_lancamento,
-            assentos: req.body.assentos,
-            potencia: req.body.potencia,
-            aro: req.body.aro,
-            versao: req.body.versao,
-            peso: req.body.peso,
-            abastecimento: req.body.abastecimento
-        };
+        const data = req.body;
         if (id.toString().trim() === "" || id === null || id === undefined || typeof id !== 'string') {
             throw new Error("Id do automóvel inválido!");
         }
@@ -128,6 +118,9 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         }
         else if (data.preco.toString().trim() === "" || data.preco === null || data.preco === undefined || typeof data.preco !== 'number') {
             throw new Error("Preço do automóvel inválido!");
+        }
+        else if (data.cor.toString().trim() === "" || data.cor === null || data.cor === undefined || typeof data.cor !== 'string') {
+            throw new Error("Cor do automóvel inválida!");
         }
         else if (data.fabricante.toString().trim() === "" || data.fabricante === null || data.fabricante === undefined || typeof data.fabricante !== 'string') {
             throw new Error("Fabricante do automóvel inválido!");
@@ -157,12 +150,18 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
             throw new Error("Abastecimento do automóvel inválido!");
         }
         const objId = new mongodb_1.ObjectId(id);
+        const carro = new car_1.default(
+        //objId, 
+        data.nome, data.preco, data.cor, data.fabricante, data.categoria, data.ano_lancamento, data.assentos, data.potencia, data.aro, data.versao, data.peso, data.abastecimento);
         yield carCollection.updateOne({
             _id: objId
         }, {
-            $set: data
+            $set: (0, remove_prefix_keys_1.removePrefixFromKeys)(carro)
         });
         const result = yield carCollection.findOne({ _id: objId });
+        if (result === undefined || result === null) {
+            throw new Error("Carro não encontrado! Por favor, verifique se o ID inserido está correto!");
+        }
         const carWithoutPrefix = (0, remove_prefix_keys_1.removePrefixFromKeys)(result);
         res.status(200).json({
             message: carWithoutPrefix

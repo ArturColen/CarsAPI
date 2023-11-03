@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Carro {
-    constructor(id, nome, preco, cor, fabricante, categoria, anoLancamento, assentos, potencia, aro, versao, peso, abastecimento) {
-        this._id = id;
+    constructor(nome, preco, cor, fabricante, categoria, anoLancamento, assentos, potencia, aro, versao, peso, abastecimento) {
+        //this._id = id;
         this._nome = nome;
         this._preco = preco;
         this._cor = cor;
@@ -16,9 +16,9 @@ class Carro {
         this._peso = peso;
         this._abastecimento = abastecimento;
     }
-    get id() {
-        return this._id;
-    }
+    // get id() {
+    //     return this._id;
+    // }
     get nome() {
         return this._nome;
     }
