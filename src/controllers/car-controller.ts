@@ -39,11 +39,7 @@ export const findCarByName = async (req: Request, res: Response) => {
         }
 
         if (typeof nome !== "string") {
-            throw new Error("Informe corretamente o parâmetro 'nome' do carro");
-        }
-
-        if (nome === null || nome === undefined) {
-            throw new Error("O parâmetro 'nome' não foi fornecido na consulta.");
+            throw new Error("Informe corretamente o nome do carro");
         }
 
         conn = await getMongoConnection();
@@ -80,7 +76,6 @@ export const createCarController = async (req: Request, res: Response) => {
         const carData = req.body;
 
         const car = new Carro(
-            //newId,
             carData.nome,
             carData.preco,
             carData.cor,
@@ -109,7 +104,7 @@ export const createCarController = async (req: Request, res: Response) => {
         const insertedCar = await carCollection.findOne({ _id: insertedId });
 
         res.status(201).json({
-            message: "Carro criado com sucesso", carro: insertedCar
+            message: "Carro criado com sucesso"
         });
     }
     catch (err) {
@@ -205,7 +200,7 @@ export const updateCarController = async (req: Request, res: Response) => {
 
         const carWithoutPrefix = removePrefixFromKeys(result);
         res.status(200).json({
-            message: carWithoutPrefix
+            message: "Dados atualizados com sucesso."
         });
     }
     catch (err) {
