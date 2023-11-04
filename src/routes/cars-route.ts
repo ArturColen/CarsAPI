@@ -5,12 +5,12 @@ const carRouter = express.Router();
 
 carRouter.get('/', findAllCarsController);
 
-carRouter.get('/search/', findCarByName);
+carRouter.get('/search', findCarByName);
 
 carRouter.post('/create', createCarController);
 
-carRouter.put('/update/', updateCarController);
+carRouter.put('/update', updateCarController);
 
-carRouter.delete('/delete/:id', deleteCarController);
+carRouter.delete('/delete', deleteCarController);
 
 export default carRouter;

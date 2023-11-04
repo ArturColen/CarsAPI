@@ -223,11 +223,10 @@ export const updateCarController = async (req: Request, res: Response) => {
         )
 
         await carCollection.updateOne({
-                _id: objId
-            }, {
-                $set: removePrefixFromKeys(carro)
-            }
-        );
+            _id: objId
+        }, {
+            $set: removePrefixFromKeys(carro)
+        });
 
         const result = await carCollection.findOne({ _id: objId });
 
@@ -251,10 +250,40 @@ export const updateCarController = async (req: Request, res: Response) => {
 };
 
 export const deleteCarController = async (req: Request, res: Response) => {
+    let conn: MongoClient | null = null;
+
     try {
+        conn = await getMongoConnection();
+        const db = conn.db();
+        const carCollection = db.collection("cars");
+        const idCar = req.query.id as string | undefined;
 
-    }
-    catch (err) {
+        if (idCar === undefined) {
+            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
+        }
 
+        if (idCar === null || typeof idCar !== 'string' || idCar.trim() === "") {
+            throw new Error("Id do automóvel inválido!");
+        }
+
+        const objId = new ObjectId(idCar);
+
+        const deletedCar = await carCollection.findOneAndDelete({ _id: objId });
+
+        if (!deletedCar.value) {
+            res.status(404).json({
+                message: "Carro não encontrado!"
+            });
+        } else {
+            res.status(200).json({
+                message: "Exclusão feita com sucesso!"
+            });
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: (err as Error).message
+        });
+    } finally {
+        conn?.close();
     }
 };
