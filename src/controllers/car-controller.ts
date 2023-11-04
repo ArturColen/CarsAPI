@@ -32,7 +32,7 @@ export const findCarByName = async (req: Request, res: Response) => {
     let conn: MongoClient | null = null;
 
     try {
-        const nome = req.params.nome;
+        const nome = req.query.nome;
 
         if (nome === undefined) {
             throw new Error("O parâmetro 'nome' não foi fornecido na consulta.");
@@ -46,7 +46,7 @@ export const findCarByName = async (req: Request, res: Response) => {
         const db = conn.db();
         const carCollection = await db.collection("cars");
 
-        const query = { _nome: nome };
+        const query = { nome };
 
         const result = await carCollection.find(query).toArray();
 
@@ -72,100 +72,83 @@ export const findCarByName = async (req: Request, res: Response) => {
 }
 
 export const createCarController = async (req: Request, res: Response) => {
-
-    let conn: MongoClient | null = null;
-    
     try {
+        const data = req.body;
+
+        if (data.nome === undefined || data.nome === null || typeof data.nome !== 'string' || data.nome.trim() === "") {
+            throw new Error("Nome do automóvel inválido!")
+        }
+        else if (data.preco === undefined || data.preco === null || typeof data.preco !== 'number' || data.preco.toString().trim() === "") {
+            throw new Error("Preço do automóvel inválido!")
+        }
+        else if (data.cor === undefined || data.cor === null || typeof data.cor !== 'string' || data.cor.trim() === "") {
+            throw new Error("Cor do automóvel inválida!")
+        }
+        else if (data.fabricante === undefined || data.fabricante === null || typeof data.fabricante !== 'string' || data.fabricante.trim() === "") {
+            throw new Error("Fabricante do automóvel inválido!")
+        }
+        else if (data.categoria === undefined || data.categoria === null || typeof data.categoria !== 'string' || data.categoria.trim() === "") {
+            throw new Error("Categoria do automóvel inválida!")
+        }
+        else if (data.ano_lancamento === undefined || data.ano_lancamento === null || typeof data.ano_lancamento !== 'number' || data.ano_lancamento.toString().trim() === "") {
+            throw new Error("Ano de lançamento do automóvel inválido!")
+        }
+        else if (data.assentos === undefined || data.assentos === null || typeof data.assentos !== 'number' || data.assentos.toString().trim() === "") {
+            throw new Error("Quantidade de assentos do automóvel inválida!")
+        }
+        else if (data.potencia === undefined || data.potencia === null || typeof data.potencia !== 'number' || data.potencia.toString().trim() === "") {
+            throw new Error("Potência do automóvel inválida!")
+        }
+        else if (data.aro === undefined || data.aro === null || typeof data.aro !== 'number' || data.aro.toString().trim() === "") {
+            throw new Error("Aro do automóvel inválido!")
+        }
+        else if (data.versao === undefined || data.versao === null || typeof data.versao !== 'string' || data.versao.trim() === "") {
+            throw new Error("Versão do automóvel inválida!")
+        }
+        else if (data.peso === undefined || data.peso === null || typeof data.peso !== 'number' || data.peso.toString().trim() === "") {
+            throw new Error("Peso do automóvel inválido!")
+        }
+        else if (data.abastecimento === undefined || data.abastecimento === null || typeof data.abastecimento !== 'string' || data.abastecimento.trim() === "") {
+            throw new Error("Abastecimento do automóvel inválido!")
+        }
+
+        const car = new Carro(
+            data.nome,
+            data.preco,
+            data.cor,
+            data.fabricante,
+            data.categoria,
+            data.ano_lancamento,
+            data.assentos,
+            data.potencia,
+            data.aro,
+            data.versao,
+            data.peso,
+            data.abastecimento
+        );
 
         const conn = await getMongoConnection();
         const db = conn.db();
         const carCollection = db.collection("cars");
 
-        const carData = req.body;
-        const newId = new ObjectId();
-        
-        const newIdString = newId.toString();
-
-        const car = new Carro(
-            newIdString,
-            carData.nome,
-            carData.preco,
-            carData.cor,
-            carData.fabricante,
-            carData.categoria,
-            carData.ano_lancamento,
-            carData.assentos,
-            carData.potencia,
-            carData.aro,
-            carData.versao,
-            carData.peso,
-            carData.abastecimento
-        );
-        
-        try{    
-            if (carData.nome.toString().trim() === "" || carData.nome === null || carData.nome === undefined || typeof carData.nome !== 'string') {
-                throw new Error("Favor inserir o nome do automóvel de forma válida.")
-            }
-            else if (carData.preco.toString().trim() === "" || carData.preco === null || carData.preco === undefined || typeof carData.preco !== 'number') {
-                throw new Error("Favor inserir o preço do automóvel de forma válida.")
-            }
-            else if (carData.cor.toString().trim() === "" || carData.cor === null || carData.cor === undefined || typeof carData.cor !== 'string') {
-                throw new Error("Favor inserir a cor do automóvel de forma válida.")
-            }
-            else if (carData.fabricante.toString().trim() === "" || carData.fabricante === null || carData.fabricante === undefined || typeof carData.fabricante !== 'string') {
-                throw new Error("Favor inserir o fabricante de automóveis de forma válida.")
-            }
-            else if (carData.categoria.toString().trim() === "" || carData.categoria === null || carData.categoria === undefined || typeof carData.categoria !== 'string') {
-                throw new Error("Favor inserir a categoria dos automóveis de forma válida.")
-            }
-            else if (carData.ano_lancamento.toString().trim() === "" || carData.ano_lancamento === null || carData.ano_lancamento === undefined || typeof carData.ano_lancamento !== 'number') {
-                throw new Error("Favor inserir o ano de lançamento do automóvel de forma válida.")
-            }
-            else if (carData.assentos.toString().trim() === "" || carData.assentos === null || carData.assentos === undefined || typeof carData.assentos !== 'number') {
-                throw new Error("Favor inserir a quantidade de assentos do automóvel de forma válida.")
-            }
-            else if (carData.potencia.toString().trim() === "" || carData.potencia === null || carData.potencia === undefined || typeof carData.potencia !== 'number') {
-                throw new Error("Favor inserir a potência do automóvel de forma válida.")
-            }
-            else if (carData.aro.toString().trim() === "" || carData.aro === null || carData.aro === undefined || typeof carData.aro !== 'number') {
-                throw new Error("Favor inserir o aro do automóvel de forma válida.")
-            }
-            else if (carData.versao.toString().trim() === "" || carData.versao === null || carData.versao === undefined || typeof carData.versao !== 'string') {
-                throw new Error("Favor inserir a versão do automóvel de forma válida.")
-            }
-            else if (carData.peso.toString().trim() === "" || carData.peso === null || carData.peso === undefined || typeof carData.peso !== 'number') {
-                throw new Error("Favor inserir o peso do automóvel de forma válida.")
-            }
-            else if (carData.abastecimento.toString().trim() === "" || carData.abastecimento === null || carData.abastecimento === undefined || typeof carData.abastecimento !== 'string') {
-                throw new Error("Favor inserir o tipo do abastecimento do automóvel de forma válida.")
-            }
-        }catch (err){
-            res.status(400).json({message: (err as Error).message});
-            return;
-        }
-
         const carDocument = {
             ...car,
         };
 
-        const result = await carCollection.insertOne(carDocument);
+        const result = await carCollection.insertOne(removePrefixFromKeys(carDocument));
 
         const insertedId = result.insertedId;
-
         const insertedCar = await carCollection.findOne({ _id: insertedId });
 
         res.status(201).json({
-            message: "Carro criado com sucesso", carro: insertedCar
+            message: "Carro criado com sucesso"
         });
     }
     catch (err) {
-        res.status(500).json({message: (err as Error).message});
-        return;
+        res.status(500).json({
+            message: (err as Error).message
+        });
     }
-    /*finally {
-        conn?.close();
-    }
-    */
 };
 
 export const updateCarController = async (req: Request, res: Response) => {
@@ -175,76 +158,86 @@ export const updateCarController = async (req: Request, res: Response) => {
         const db = conn.db()
         const carCollection = db.collection("cars")
 
-        const id = req.params.id
+        const id = req.query.id as string | undefined;
+        const data = req.body
 
-        const data = {
-            nome: req.body.nome,
-            preco: req.body.preco,
-            fabricante: req.body.fabricante,
-            categoria: req.body.categoria,
-            ano_lancamento: req.body.ano_lancamento,
-            assentos: req.body.assentos,
-            potencia: req.body.potencia,
-            aro: req.body.aro,
-            versao: req.body.versao,
-            peso: req.body.peso,
-            abastecimento: req.body.abastecimento
+        if (id === undefined) {
+            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }
 
-        if (id.toString().trim() === "" || id === null || id === undefined || typeof id !== 'string') {
-            throw new Error("Id do automóvel inválido!")
+        if (id === null || typeof id !== 'string' || id.trim() === "") {
+            throw new Error("Id do automóvel inválido!");
         }
-        else if (data.nome.toString().trim() === "" || data.nome === null || data.nome === undefined || typeof data.nome !== 'string') {
+        else if (data.nome === undefined || data.nome === null || typeof data.nome !== 'string' || data.nome.trim() === "") {
             throw new Error("Nome do automóvel inválido!")
         }
-        else if (data.preco.toString().trim() === "" || data.preco === null || data.preco === undefined || typeof data.preco !== 'number') {
+        else if (data.preco === undefined || data.preco === null || typeof data.preco !== 'number' || data.preco.toString().trim() === "") {
             throw new Error("Preço do automóvel inválido!")
         }
-        
-        //faltou adicionar a validação de cor
-
-        else if (data.fabricante.toString().trim() === "" || data.fabricante === null || data.fabricante === undefined || typeof data.fabricante !== 'string') {
+        else if (data.cor === undefined || data.cor === null || typeof data.cor !== 'string' || data.cor.trim() === "") {
+            throw new Error("Cor do automóvel inválida!")
+        }
+        else if (data.fabricante === undefined || data.fabricante === null || typeof data.fabricante !== 'string' || data.fabricante.trim() === "") {
             throw new Error("Fabricante do automóvel inválido!")
         }
-        else if (data.categoria.toString().trim() === "" || data.categoria === null || data.categoria === undefined || typeof data.categoria !== 'string') {
-            throw new Error("Categoria do automóvel inválido!")
+        else if (data.categoria === undefined || data.categoria === null || typeof data.categoria !== 'string' || data.categoria.trim() === "") {
+            throw new Error("Categoria do automóvel inválida!")
         }
-        else if (data.ano_lancamento.toString().trim() === "" || data.ano_lancamento === null || data.ano_lancamento === undefined || typeof data.ano_lancamento !== 'number') {
+        else if (data.ano_lancamento === undefined || data.ano_lancamento === null || typeof data.ano_lancamento !== 'number' || data.ano_lancamento.toString().trim() === "") {
             throw new Error("Ano de lançamento do automóvel inválido!")
         }
-        else if (data.assentos.toString().trim() === "" || data.assentos === null || data.assentos === undefined || typeof data.assentos !== 'number') {
-            throw new Error("Assentos do automóvel inválido!")
+        else if (data.assentos === undefined || data.assentos === null || typeof data.assentos !== 'number' || data.assentos.toString().trim() === "") {
+            throw new Error("Quantidade de assentos do automóvel inválida!")
         }
-        else if (data.potencia.toString().trim() === "" || data.potencia === null || data.potencia === undefined || typeof data.potencia !== 'number') {
-            throw new Error("Potência do automóvel inválido!")
+        else if (data.potencia === undefined || data.potencia === null || typeof data.potencia !== 'number' || data.potencia.toString().trim() === "") {
+            throw new Error("Potência do automóvel inválida!")
         }
-        else if (data.aro.toString().trim() === "" || data.aro === null || data.aro === undefined || typeof data.aro !== 'number') {
+        else if (data.aro === undefined || data.aro === null || typeof data.aro !== 'number' || data.aro.toString().trim() === "") {
             throw new Error("Aro do automóvel inválido!")
         }
-        else if (data.versao.toString().trim() === "" || data.versao === null || data.versao === undefined || typeof data.versao !== 'string') {
-            throw new Error("Versão do automóvel inválido!")
+        else if (data.versao === undefined || data.versao === null || typeof data.versao !== 'string' || data.versao.trim() === "") {
+            throw new Error("Versão do automóvel inválida!")
         }
-        else if (data.peso.toString().trim() === "" || data.peso === null || data.peso === undefined || typeof data.peso !== 'number') {
+        else if (data.peso === undefined || data.peso === null || typeof data.peso !== 'number' || data.peso.toString().trim() === "") {
             throw new Error("Peso do automóvel inválido!")
         }
-        else if (data.abastecimento.toString().trim() === "" || data.abastecimento === null || data.abastecimento === undefined || typeof data.abastecimento !== 'string') {
+        else if (data.abastecimento === undefined || data.abastecimento === null || typeof data.abastecimento !== 'string' || data.abastecimento.trim() === "") {
             throw new Error("Abastecimento do automóvel inválido!")
         }
 
         const objId = new ObjectId(id);
 
+        const carro = new Carro(
+            data.nome, 
+            data.preco, 
+            data.cor, 
+            data.fabricante, 
+            data.categoria, 
+            data.ano_lancamento, 
+            data.assentos, 
+            data.potencia, 
+            data.aro, 
+            data.versao, 
+            data.peso, 
+            data.abastecimento
+        )
+
         await carCollection.updateOne({
                 _id: objId
             }, {
-                $set: data
+                $set: removePrefixFromKeys(carro)
             }
         );
 
         const result = await carCollection.findOne({ _id: objId });
 
+        if (result === undefined || result === null) {
+            throw new Error("Carro não encontrado! Por favor, verifique se o ID inserido está correto!")
+        }
+
         const carWithoutPrefix = removePrefixFromKeys(result);
         res.status(200).json({
-            message: carWithoutPrefix
+            message: "Dados atualizados com sucesso."
         });
     }
     catch (err) {
