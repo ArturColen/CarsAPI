@@ -78,8 +78,44 @@ const findCarByName = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.findCarByName = findCarByName;
 const createCarController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const carData = req.body;
-        const car = new car_1.default(carData.nome, carData.preco, carData.cor, carData.fabricante, carData.categoria, carData.ano_lancamento, carData.assentos, carData.potencia, carData.aro, carData.versao, carData.peso, carData.abastecimento);
+        const data = req.body;
+        if (data.nome === undefined || data.nome === null || typeof data.nome !== 'string' || data.nome.trim() === "") {
+            throw new Error("Nome do automóvel inválido!");
+        }
+        else if (data.preco === undefined || data.preco === null || typeof data.preco !== 'number' || data.preco.toString().trim() === "") {
+            throw new Error("Preço do automóvel inválido!");
+        }
+        else if (data.cor === undefined || data.cor === null || typeof data.cor !== 'string' || data.cor.trim() === "") {
+            throw new Error("Cor do automóvel inválida!");
+        }
+        else if (data.fabricante === undefined || data.fabricante === null || typeof data.fabricante !== 'string' || data.fabricante.trim() === "") {
+            throw new Error("Fabricante do automóvel inválido!");
+        }
+        else if (data.categoria === undefined || data.categoria === null || typeof data.categoria !== 'string' || data.categoria.trim() === "") {
+            throw new Error("Categoria do automóvel inválida!");
+        }
+        else if (data.ano_lancamento === undefined || data.ano_lancamento === null || typeof data.ano_lancamento !== 'number' || data.ano_lancamento.toString().trim() === "") {
+            throw new Error("Ano de lançamento do automóvel inválido!");
+        }
+        else if (data.assentos === undefined || data.assentos === null || typeof data.assentos !== 'number' || data.assentos.toString().trim() === "") {
+            throw new Error("Quantidade de assentos do automóvel inválida!");
+        }
+        else if (data.potencia === undefined || data.potencia === null || typeof data.potencia !== 'number' || data.potencia.toString().trim() === "") {
+            throw new Error("Potência do automóvel inválida!");
+        }
+        else if (data.aro === undefined || data.aro === null || typeof data.aro !== 'number' || data.aro.toString().trim() === "") {
+            throw new Error("Aro do automóvel inválido!");
+        }
+        else if (data.versao === undefined || data.versao === null || typeof data.versao !== 'string' || data.versao.trim() === "") {
+            throw new Error("Versão do automóvel inválida!");
+        }
+        else if (data.peso === undefined || data.peso === null || typeof data.peso !== 'number' || data.peso.toString().trim() === "") {
+            throw new Error("Peso do automóvel inválido!");
+        }
+        else if (data.abastecimento === undefined || data.abastecimento === null || typeof data.abastecimento !== 'string' || data.abastecimento.trim() === "") {
+            throw new Error("Abastecimento do automóvel inválido!");
+        }
+        const car = new car_1.default(data.nome, data.preco, data.cor, data.fabricante, data.categoria, data.ano_lancamento, data.assentos, data.potencia, data.aro, data.versao, data.peso, data.abastecimento);
         const conn = yield (0, db_1.default)();
         const db = conn.db();
         const carCollection = db.collection("cars");
@@ -125,22 +161,22 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
             throw new Error("Fabricante do automóvel inválido!");
         }
         else if (data.categoria === undefined || data.categoria === null || typeof data.categoria !== 'string' || data.categoria.trim() === "") {
-            throw new Error("Categoria do automóvel inválido!");
+            throw new Error("Categoria do automóvel inválida!");
         }
         else if (data.ano_lancamento === undefined || data.ano_lancamento === null || typeof data.ano_lancamento !== 'number' || data.ano_lancamento.toString().trim() === "") {
             throw new Error("Ano de lançamento do automóvel inválido!");
         }
         else if (data.assentos === undefined || data.assentos === null || typeof data.assentos !== 'number' || data.assentos.toString().trim() === "") {
-            throw new Error("Assentos do automóvel inválido!");
+            throw new Error("Quantidade de assentos do automóvel inválida!");
         }
         else if (data.potencia === undefined || data.potencia === null || typeof data.potencia !== 'number' || data.potencia.toString().trim() === "") {
-            throw new Error("Potência do automóvel inválido!");
+            throw new Error("Potência do automóvel inválida!");
         }
         else if (data.aro === undefined || data.aro === null || typeof data.aro !== 'number' || data.aro.toString().trim() === "") {
             throw new Error("Aro do automóvel inválido!");
         }
         else if (data.versao === undefined || data.versao === null || typeof data.versao !== 'string' || data.versao.trim() === "") {
-            throw new Error("Versão do automóvel inválido!");
+            throw new Error("Versão do automóvel inválida!");
         }
         else if (data.peso === undefined || data.peso === null || typeof data.peso !== 'number' || data.peso.toString().trim() === "") {
             throw new Error("Peso do automóvel inválido!");
