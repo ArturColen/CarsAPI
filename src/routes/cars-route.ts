@@ -5,11 +5,11 @@ const carRouter = express.Router();
 
 carRouter.get('/', findAllCarsController);
 
-carRouter.get('/search/:nome', findCarByName);
+carRouter.get('/search/', findCarByName);
 
 carRouter.post('/create', createCarController);
 
-carRouter.put('/update/:id', updateCarController);
+carRouter.put('/update/', updateCarController);
 
 carRouter.delete('/delete/:id', deleteCarController);
 
