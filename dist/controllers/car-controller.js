@@ -211,9 +211,38 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
 });
 exports.updateCarController = updateCarController;
 const deleteCarController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let conn = null;
     try {
+        conn = yield (0, db_1.default)();
+        const db = conn.db();
+        const carCollection = db.collection("cars");
+        const idCar = req.query.id;
+        if (idCar === undefined) {
+            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
+        }
+        if (idCar === null || typeof idCar !== 'string' || idCar.trim() === "") {
+            throw new Error("Id do automóvel inválido!");
+        }
+        const objId = new mongodb_1.ObjectId(idCar);
+        const deletedCar = yield carCollection.findOneAndDelete({ _id: objId });
+        if (!deletedCar.value) {
+            res.status(404).json({
+                message: "Carro não encontrado!"
+            });
+        }
+        else {
+            res.status(200).json({
+                message: "Exclusão feita com sucesso!"
+            });
+        }
     }
     catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+    finally {
+        conn === null || conn === void 0 ? void 0 : conn.close();
     }
 });
 exports.deleteCarController = deleteCarController;
