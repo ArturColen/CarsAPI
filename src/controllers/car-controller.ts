@@ -93,10 +93,12 @@ export const createCarController = async (req: Request, res: Response) => {
             ...car,
         };
 
-        const result = await carCollection.insertOne(removePrefixFromKeys(carDocument));
+        await carCollection.insertOne(carDocument);
+        const insertedCar = await carCollection.findOne(carDocument);
 
         res.status(201).json({
-            message: 'Carro criado com sucesso'
+            message: 'Carro criado com sucesso',
+            Car: removePrefixFromKeys(insertedCar)
         });
     }
     catch (err) {
@@ -186,14 +188,15 @@ export const updateCarController = async (req: Request, res: Response) => {
 
         const result = await carCollection.findOne({ _id: objId });
 
-        if (result === undefined || result === null) {
+        if (!result) {
             throw new Error('Carro não encontrado! Por favor, verifique se o ID inserido está correto!');
         }
 
         const carWithoutPrefix = removePrefixFromKeys(result);
 
         res.status(200).json({
-            message: 'Dados atualizados com sucesso.'
+            message: 'Dados atualizados com sucesso.',
+            Car: carWithoutPrefix,
         });
     }
     catch (err) {

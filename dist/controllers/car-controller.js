@@ -83,9 +83,11 @@ const createCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         const db = connection.db();
         const carCollection = db.collection('cars');
         const carDocument = Object.assign({}, car);
-        const result = yield carCollection.insertOne((0, remove_prefix_keys_1.removePrefixFromKeys)(carDocument));
+        yield carCollection.insertOne(carDocument);
+        const insertedCar = yield carCollection.findOne(carDocument);
         res.status(201).json({
-            message: 'Carro criado com sucesso'
+            message: 'Carro criado com sucesso',
+            Car: (0, remove_prefix_keys_1.removePrefixFromKeys)(insertedCar)
         });
     }
     catch (err) {
@@ -154,12 +156,13 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
             $set: (0, remove_prefix_keys_1.removePrefixFromKeys)(carro)
         });
         const result = yield carCollection.findOne({ _id: objId });
-        if (result === undefined || result === null) {
+        if (!result) {
             throw new Error('Carro não encontrado! Por favor, verifique se o ID inserido está correto!');
         }
         const carWithoutPrefix = (0, remove_prefix_keys_1.removePrefixFromKeys)(result);
         res.status(200).json({
-            message: 'Dados atualizados com sucesso.'
+            message: 'Dados atualizados com sucesso.',
+            Car: carWithoutPrefix,
         });
     }
     catch (err) {
