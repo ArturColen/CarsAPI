@@ -15,3 +15,4 @@ function removePrefixFromKeys(obj) {
     return renamedObj;
 }
 exports.removePrefixFromKeys = removePrefixFromKeys;
+;
