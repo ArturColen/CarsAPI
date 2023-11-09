@@ -36,7 +36,7 @@ export const findCarByName = async (req: Request, res: Response) => {
         const nome = req.query.nome;
 
         if (nome === undefined) {
-            throw new Error('O parâmetro "nome" não foi fornecido na consulta.');
+            throw new Error("O parâmetro 'nome'não foi fornecido na consulta.");
         }
 
         if (typeof nome !== 'string') {
@@ -47,14 +47,14 @@ export const findCarByName = async (req: Request, res: Response) => {
         const db = connection.db();
         const carCollection = await db.collection('cars');
 
-        const query = { nome };
+        const query = { nome: { $regex: new RegExp(`^${nome}$`, 'i') } };
 
         const result = await carCollection.find(query).toArray();
 
         if (result.length === 0) {
             res.status(404).json({
                 message: 'Carro não encontrado'
-            });;
+            });
         }
         else {
             const carsWithoutPrefix = result.map(removePrefixFromKeys);
@@ -73,6 +73,8 @@ export const findCarByName = async (req: Request, res: Response) => {
         connection?.close();
     }
 };
+
+
 
 export const createCarController = async (req: Request, res: Response) => {
     try {
@@ -140,9 +142,6 @@ export const createCarController = async (req: Request, res: Response) => {
 
         const result = await carCollection.insertOne(removePrefixFromKeys(carDocument));
 
-        const insertedId = result.insertedId;
-        const insertedCar = await carCollection.findOne({ _id: insertedId });
-
         res.status(201).json({
             message: 'Carro criado com sucesso'
         });
@@ -166,7 +165,7 @@ export const updateCarController = async (req: Request, res: Response) => {
         const data = req.body;
 
         if (id === undefined) {
-            throw new Error('O parâmetro "id" não foi fornecido na consulta.');
+            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }
 
         if (id === null || typeof id !== 'string' || id.trim() === '') {
@@ -264,7 +263,7 @@ export const deleteCarController = async (req: Request, res: Response) => {
         const idCar = req.query.id as string | undefined;
 
         if (idCar === undefined) {
-            throw new Error('O parâmetro "id" não foi fornecido na consulta.');
+            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }
 
         if (idCar === null || typeof idCar !== 'string' || idCar.trim() === '') {

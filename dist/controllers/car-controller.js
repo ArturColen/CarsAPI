@@ -44,7 +44,7 @@ const findCarByName = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const nome = req.query.nome;
         if (nome === undefined) {
-            throw new Error('O parâmetro "nome" não foi fornecido na consulta.');
+            throw new Error("O parâmetro 'nome'não foi fornecido na consulta.");
         }
         if (typeof nome !== 'string') {
             throw new Error('Informe corretamente o nome do carro');
@@ -52,13 +52,12 @@ const findCarByName = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         connection = yield (0, db_1.default)();
         const db = connection.db();
         const carCollection = yield db.collection('cars');
-        const query = { nome };
+        const query = { nome: { $regex: new RegExp(`^${nome}$`, 'i') } };
         const result = yield carCollection.find(query).toArray();
         if (result.length === 0) {
             res.status(404).json({
                 message: 'Carro não encontrado'
             });
-            ;
         }
         else {
             const carsWithoutPrefix = result.map(remove_prefix_keys_1.removePrefixFromKeys);
@@ -122,8 +121,6 @@ const createCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         const carCollection = db.collection('cars');
         const carDocument = Object.assign({}, car);
         const result = yield carCollection.insertOne((0, remove_prefix_keys_1.removePrefixFromKeys)(carDocument));
-        const insertedId = result.insertedId;
-        const insertedCar = yield carCollection.findOne({ _id: insertedId });
         res.status(201).json({
             message: 'Carro criado com sucesso'
         });
@@ -145,7 +142,7 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         ;
         const data = req.body;
         if (id === undefined) {
-            throw new Error('O parâmetro "id" não foi fornecido na consulta.');
+            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }
         if (id === null || typeof id !== 'string' || id.trim() === '') {
             throw new Error('Id do automóvel inválido!');
@@ -220,7 +217,7 @@ const deleteCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         const carCollection = db.collection('cars');
         const idCar = req.query.id;
         if (idCar === undefined) {
-            throw new Error('O parâmetro "id" não foi fornecido na consulta.');
+            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }
         if (idCar === null || typeof idCar !== 'string' || idCar.trim() === '') {
             throw new Error('Id do automóvel inválido!');
