@@ -29,53 +29,6 @@ export const findAllCarsController = async (req: Request, res: Response) => {
     }
 };
 
-export const findCarByName = async (req: Request, res: Response) => {
-    let connection: MongoClient | null = null;
-
-    try {
-        const nome = req.query.nome;
-
-        if (nome === undefined) {
-            throw new Error("O parâmetro 'nome'não foi fornecido na consulta.");
-        }
-
-        if (typeof nome !== 'string') {
-            throw new Error('Informe corretamente o nome do carro');
-        }
-
-        connection = await getMongoConnection();
-        const db = connection.db();
-        const carCollection = await db.collection('cars');
-
-        const query = { nome: { $regex: new RegExp(`^${nome}$`, 'i') } };
-
-        const result = await carCollection.find(query).toArray();
-
-        if (result.length === 0) {
-            res.status(404).json({
-                message: 'Carro não encontrado'
-            });
-        }
-        else {
-            const carsWithoutPrefix = result.map(removePrefixFromKeys);
-
-            res.status(200).json({
-                Car: carsWithoutPrefix
-            });
-        }
-    }
-    catch (err) {
-        res.status(500).json({
-            message: (err as Error).message
-        });
-    }
-    finally {
-        connection?.close();
-    }
-};
-
-
-
 export const createCarController = async (req: Request, res: Response) => {
     try {
         const data = req.body;

@@ -1,16 +1,14 @@
 import express from 'express';
-import { createCarController, deleteCarController, findAllCarsController, findCarByName, updateCarController } from '../controllers/car-controller';
+import { createCarController, deleteCarController, findAllCarsController, updateCarController } from '../controllers/car-controller';
 
 const carRouter = express.Router();
 
 carRouter.get('/', findAllCarsController);
 
-carRouter.get('/search', findCarByName);
+carRouter.post('/', createCarController);
 
-carRouter.post('/create', createCarController);
+carRouter.put('/', updateCarController);
 
-carRouter.put('/update', updateCarController);
-
-carRouter.delete('/delete', deleteCarController);
+carRouter.delete('/', deleteCarController);
 
 export default carRouter;

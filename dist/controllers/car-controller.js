@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCarController = exports.updateCarController = exports.createCarController = exports.findCarByName = exports.findAllCarsController = void 0;
+exports.deleteCarController = exports.updateCarController = exports.createCarController = exports.findAllCarsController = void 0;
 const mongodb_1 = require("mongodb");
 const car_1 = __importDefault(require("../models/car"));
 const db_1 = __importDefault(require("../db"));
@@ -39,43 +39,6 @@ const findAllCarsController = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 });
 exports.findAllCarsController = findAllCarsController;
-const findCarByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let connection = null;
-    try {
-        const nome = req.query.nome;
-        if (nome === undefined) {
-            throw new Error("O parâmetro 'nome'não foi fornecido na consulta.");
-        }
-        if (typeof nome !== 'string') {
-            throw new Error('Informe corretamente o nome do carro');
-        }
-        connection = yield (0, db_1.default)();
-        const db = connection.db();
-        const carCollection = yield db.collection('cars');
-        const query = { nome: { $regex: new RegExp(`^${nome}$`, 'i') } };
-        const result = yield carCollection.find(query).toArray();
-        if (result.length === 0) {
-            res.status(404).json({
-                message: 'Carro não encontrado'
-            });
-        }
-        else {
-            const carsWithoutPrefix = result.map(remove_prefix_keys_1.removePrefixFromKeys);
-            res.status(200).json({
-                Car: carsWithoutPrefix
-            });
-        }
-    }
-    catch (err) {
-        res.status(500).json({
-            message: err.message
-        });
-    }
-    finally {
-        connection === null || connection === void 0 ? void 0 : connection.close();
-    }
-});
-exports.findCarByName = findCarByName;
 const createCarController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
