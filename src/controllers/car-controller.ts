@@ -199,7 +199,7 @@ export const updateCarController = async (req: Request, res: Response) => {
         const db = connection.db();
         const carCollection = db.collection('cars');
 
-        const id = req.query.id as string | undefined;;
+        const id = req.params.id as string | undefined;;
         const data = req.body;
 
         if (!id) {
@@ -388,7 +388,7 @@ export const deleteCarController = async (req: Request, res: Response) => {
         connection = await getMongoConnection();
         const db = connection.db();
         const carCollection = db.collection('cars');
-        const idCar = req.query.id as string | undefined;
+        const idCar = req.params.id as string | undefined;
 
         if (!idCar) {
             throw new Error("O parâmetro 'id' não foi fornecido na consulta.");

@@ -175,7 +175,7 @@ const updateCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         connection = yield (0, db_1.default)();
         const db = connection.db();
         const carCollection = db.collection('cars');
-        const id = req.query.id;
+        const id = req.params.id;
         ;
         const data = req.body;
         if (!id) {
@@ -332,7 +332,7 @@ const deleteCarController = (req, res) => __awaiter(void 0, void 0, void 0, func
         connection = yield (0, db_1.default)();
         const db = connection.db();
         const carCollection = db.collection('cars');
-        const idCar = req.query.id;
+        const idCar = req.params.id;
         if (!idCar) {
             throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }

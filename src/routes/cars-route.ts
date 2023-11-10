@@ -7,8 +7,8 @@ carRouter.get('/', findAllCarsController);
 
 carRouter.post('/', createCarController);
 
-carRouter.put('/', updateCarController);
+carRouter.put('/:id', updateCarController);
 
-carRouter.delete('/', deleteCarController);
+carRouter.delete('/:id', deleteCarController);
 
 export default carRouter;
