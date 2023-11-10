@@ -33,41 +33,124 @@ export const createCarController = async (req: Request, res: Response) => {
     try {
         const data = req.body;
 
-        if (data.nome === undefined || data.nome === null || typeof data.nome !== 'string' || data.nome.trim() === '') {
-            throw new Error('Nome do automóvel inválido!');
+        if (!data.nome) {
+            throw new Error('Favor preencher corretamente o nome do automóvel!');
         }
-        else if (data.preco === undefined || data.preco === null || typeof data.preco !== 'number' || data.preco.toString().trim() === '') {
-            throw new Error('Preço do automóvel inválido!');
+        else if (typeof data.nome !== 'string') {
+            throw new Error('O nome do automóvel deve ser uma string válida!');
         }
-        else if (data.cor === undefined || data.cor === null || typeof data.cor !== 'string' || data.cor.trim() === '') {
-            throw new Error('Cor do automóvel inválida!');
+        else if (data.nome.trim() === '') {
+            throw new Error('O nome do automóvel não pode ser um campo vazio!');
         }
-        else if (data.fabricante === undefined || data.fabricante === null || typeof data.fabricante !== 'string' || data.fabricante.trim() === '') {
-            throw new Error('Fabricante do automóvel inválido!');
+            
+        if (!data.preco) {
+            throw new Error('Favor preencher corretamente o preço do automóvel!');
         }
-        else if (data.categoria === undefined || data.categoria === null || typeof data.categoria !== 'string' || data.categoria.trim() === '') {
-            throw new Error('Categoria do automóvel inválida!');
+        else if (typeof data.preco !== 'number') {
+            throw new Error('O preço do automóvel deve ser um número válido!');
         }
-        else if (data.ano_lancamento === undefined || data.ano_lancamento === null || typeof data.ano_lancamento !== 'number' || data.ano_lancamento.toString().trim() === '') {
-            throw new Error('Ano de lançamento do automóvel inválido!');
+        else if (data.preco.toString().trim() === '') {
+            throw new Error('O preço do automóvel não pode ser um campo vázio!');
         }
-        else if (data.assentos === undefined || data.assentos === null || typeof data.assentos !== 'number' || data.assentos.toString().trim() === '') {
-            throw new Error('Quantidade de assentos do automóvel inválida!');
+            
+        if (!data.cor) {
+            throw new Error('Favor preencher corretamente a cor do automóvel!');
         }
-        else if (data.potencia === undefined || data.potencia === null || typeof data.potencia !== 'number' || data.potencia.toString().trim() === '') {
-            throw new Error('Potência do automóvel inválida!');
+        else if (typeof data.cor !== 'string') {
+            throw new Error('A cor do automóvel deve ser uma string válida!');
         }
-        else if (data.aro === undefined || data.aro === null || typeof data.aro !== 'number' || data.aro.toString().trim() === '') {
-            throw new Error('Aro do automóvel inválido!');
+        else if (data.cor.trim() === '') {
+            throw new Error('A cor do automóvel não pode ser um campo vazio!');
         }
-        else if (data.versao === undefined || data.versao === null || typeof data.versao !== 'string' || data.versao.trim() === '') {
-            throw new Error('Versão do automóvel inválida!');
+            
+        if (!data.fabricante) {
+            throw new Error('Favor preencher corretamente o fabricante do automóvel!');
         }
-        else if (data.peso === undefined || data.peso === null || typeof data.peso !== 'number' || data.peso.toString().trim() === '') {
-            throw new Error('Peso do automóvel inválido!');
+        else if (typeof data.fabricante !== 'string') {
+            throw new Error('O fabricante do automóvel deve ser uma string válida!');
         }
-        else if (data.abastecimento === undefined || data.abastecimento === null || typeof data.abastecimento !== 'string' || data.abastecimento.trim() === '') {
-            throw new Error('Abastecimento do automóvel inválido!');
+        else if (data.fabricante.trim() === '') {
+            throw new Error('O fabricante do automóvel não pode ser um campo vazio!');
+        }
+            
+        if (!data.categoria) {
+            throw new Error('Favor preencher corretamente a categoria do automóvel!');
+        }
+        else if (typeof data.categoria !== 'string') {
+            throw new Error('A categoria do automóvel deve ser uma string válida!');
+        }
+        else if (data.categoria.trim() === '') {
+            throw new Error('A categoria do automóvel não pode ser um campo vazio!');
+        }
+            
+        if (!data.ano_lancamento) {
+            throw new Error('Favor preencher corretamente o ano de lançamento do automóvel!');
+        }
+        else if (typeof data.ano_lancamento !== 'number') {
+            throw new Error('O ano de lançamento do automóvel deve ser um número válido!');
+        }
+        else if (data.ano_lancamento.toString().trim() === '') {
+            throw new Error('O ano de lançamento do automóvel não pode ser um campo vázio!');
+        }
+    
+        if (!data.assentos) {
+            throw new Error('Favor preencher corretamente a quantidade de assentos do automóvel!');
+        }
+        else if (typeof data.assentos !== 'number') {
+            throw new Error('A quantidade de assentos do automóvel deve ser um número válido!');
+        }
+        else if (data.assentos.toString().trim() === '') {
+            throw new Error('A quantidade de assentos do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.potencia) {
+            throw new Error('Favor preencher corretamente a potência do automóvel!');
+        }
+        else if (typeof data.potencia !== 'number') {
+            throw new Error('A potência do automóvel deve ser um número válido!');
+        }
+        else if (data.potencia.toString().trim() === '') {
+            throw new Error('A potência do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.aro) {
+            throw new Error('Favor preencher corretamente o tamanho do aro do automóvel!');
+        }
+        else if (typeof data.aro !== 'number') {
+            throw new Error('O tamanho do aro do automóvel deve ser um número válido!');
+        }
+        else if (data.aro.toString().trim() === '') {
+            throw new Error('O tamanho do aro do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.versao) {
+            throw new Error('Favor preencher corretamente a versão do automóvel!');
+        }
+        else if (typeof data.versao !== 'string') {
+            throw new Error('A versão do automóvel deve ser uma string válida!');
+        }
+        else if (data.versao.trim() === '') {
+            throw new Error('A versão do automóvel não pode ser um campo vazio!');
+        }
+        
+        if (!data.peso) {
+            throw new Error('Favor preencher corretamente o peso do automóvel!');
+        }
+        else if (typeof data.peso !== 'number') {
+            throw new Error('O peso do automóvel deve ser um número válido!');
+        }
+        else if (data.peso.toString().trim() === '') {
+            throw new Error('O peso do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.tipo_combustivel) {
+            throw new Error('Favor preencher corretamente o tipo de combustível do automóvel!');
+        }
+        else if (typeof data.tipo_combustivel !== 'string') {
+            throw new Error('O tipo de combustível do automóvel deve ser uma string válida!');
+        }
+        else if (data.tipo_combustivel.trim() === '') {
+            throw new Error('O tipo de combustível do automóvel não pode ser um campo vazio!');
         }
 
         const car = new Carro(
@@ -82,7 +165,7 @@ export const createCarController = async (req: Request, res: Response) => {
             data.aro,
             data.versao,
             data.peso,
-            data.abastecimento
+            data.tipo_combustivel
         );
 
         const connection = await getMongoConnection();
@@ -119,48 +202,134 @@ export const updateCarController = async (req: Request, res: Response) => {
         const id = req.query.id as string | undefined;;
         const data = req.body;
 
-        if (id === undefined) {
+        if (!id) {
             throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }
+        else if (typeof id !== 'string') {
+            throw new Error("O 'id' do automóvel deve ser uma string válida!");
+        }
+        else if (id.trim() === '') {
+            throw new Error("O 'id' do automóvel não pode ser um campo vazio!");
+        }
 
-        if (id === null || typeof id !== 'string' || id.trim() === '') {
-            throw new Error('Id do automóvel inválido!');
+        if (!data.nome) {
+            throw new Error('Favor preencher corretamente o nome do automóvel!');
         }
-        else if (data.nome === undefined || data.nome === null || typeof data.nome !== 'string' || data.nome.trim() === '') {
-            throw new Error('Nome do automóvel inválido!');
+        else if (typeof data.nome !== 'string') {
+            throw new Error('O nome do automóvel deve ser uma string válida!');
         }
-        else if (data.preco === undefined || data.preco === null || typeof data.preco !== 'number' || data.preco.toString().trim() === '') {
-            throw new Error('Preço do automóvel inválido!');
+        else if (data.nome.trim() === '') {
+            throw new Error('O nome do automóvel não pode ser um campo vazio!');
         }
-        else if (data.cor === undefined || data.cor === null || typeof data.cor !== 'string' || data.cor.trim() === '') {
-            throw new Error('Cor do automóvel inválida!');
+            
+        if (!data.preco) {
+            throw new Error('Favor preencher corretamente o preço do automóvel!');
         }
-        else if (data.fabricante === undefined || data.fabricante === null || typeof data.fabricante !== 'string' || data.fabricante.trim() === '') {
-            throw new Error('Fabricante do automóvel inválido!');
+        else if (typeof data.preco !== 'number') {
+            throw new Error('O preço do automóvel deve ser um número válido!');
         }
-        else if (data.categoria === undefined || data.categoria === null || typeof data.categoria !== 'string' || data.categoria.trim() === '') {
-            throw new Error('Categoria do automóvel inválida!');
+        else if (data.preco.toString().trim() === '') {
+            throw new Error('O preço do automóvel não pode ser um campo vázio!');
         }
-        else if (data.ano_lancamento === undefined || data.ano_lancamento === null || typeof data.ano_lancamento !== 'number' || data.ano_lancamento.toString().trim() === '') {
-            throw new Error('Ano de lançamento do automóvel inválido!');
+            
+        if (!data.cor) {
+            throw new Error('Favor preencher corretamente a cor do automóvel!');
         }
-        else if (data.assentos === undefined || data.assentos === null || typeof data.assentos !== 'number' || data.assentos.toString().trim() === '') {
-            throw new Error('Quantidade de assentos do automóvel inválida!');
+        else if (typeof data.cor !== 'string') {
+            throw new Error('A cor do automóvel deve ser uma string válida!');
         }
-        else if (data.potencia === undefined || data.potencia === null || typeof data.potencia !== 'number' || data.potencia.toString().trim() === '') {
-            throw new Error('Potência do automóvel inválida!');
+        else if (data.cor.trim() === '') {
+            throw new Error('A cor do automóvel não pode ser um campo vazio!');
         }
-        else if (data.aro === undefined || data.aro === null || typeof data.aro !== 'number' || data.aro.toString().trim() === '') {
-            throw new Error('Aro do automóvel inválido!');
+            
+        if (!data.fabricante) {
+            throw new Error('Favor preencher corretamente o fabricante do automóvel!');
         }
-        else if (data.versao === undefined || data.versao === null || typeof data.versao !== 'string' || data.versao.trim() === '') {
-            throw new Error('Versão do automóvel inválida!');
+        else if (typeof data.fabricante !== 'string') {
+            throw new Error('O fabricante do automóvel deve ser uma string válida!');
         }
-        else if (data.peso === undefined || data.peso === null || typeof data.peso !== 'number' || data.peso.toString().trim() === '') {
-            throw new Error('Peso do automóvel inválido!');
+        else if (data.fabricante.trim() === '') {
+            throw new Error('O fabricante do automóvel não pode ser um campo vazio!');
         }
-        else if (data.abastecimento === undefined || data.abastecimento === null || typeof data.abastecimento !== 'string' || data.abastecimento.trim() === '') {
-            throw new Error('Abastecimento do automóvel inválido!');
+            
+        if (!data.categoria) {
+            throw new Error('Favor preencher corretamente a categoria do automóvel!');
+        }
+        else if (typeof data.categoria !== 'string') {
+            throw new Error('A categoria do automóvel deve ser uma string válida!');
+        }
+        else if (data.categoria.trim() === '') {
+            throw new Error('A categoria do automóvel não pode ser um campo vazio!');
+        }
+            
+        if (!data.ano_lancamento) {
+            throw new Error('Favor preencher corretamente o ano de lançamento do automóvel!');
+        }
+        else if (typeof data.ano_lancamento !== 'number') {
+            throw new Error('O ano de lançamento do automóvel deve ser um número válido!');
+        }
+        else if (data.ano_lancamento.toString().trim() === '') {
+            throw new Error('O ano de lançamento do automóvel não pode ser um campo vázio!');
+        }
+    
+        if (!data.assentos) {
+            throw new Error('Favor preencher corretamente a quantidade de assentos do automóvel!');
+        }
+        else if (typeof data.assentos !== 'number') {
+            throw new Error('A quantidade de assentos do automóvel deve ser um número válido!');
+        }
+        else if (data.assentos.toString().trim() === '') {
+            throw new Error('A quantidade de assentos do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.potencia) {
+            throw new Error('Favor preencher corretamente a potência do automóvel!');
+        }
+        else if (typeof data.potencia !== 'number') {
+            throw new Error('A potência do automóvel deve ser um número válido!');
+        }
+        else if (data.potencia.toString().trim() === '') {
+            throw new Error('A potência do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.aro) {
+            throw new Error('Favor preencher corretamente o tamanho do aro do automóvel!');
+        }
+        else if (typeof data.aro !== 'number') {
+            throw new Error('O tamanho do aro do automóvel deve ser um número válido!');
+        }
+        else if (data.aro.toString().trim() === '') {
+            throw new Error('O tamanho do aro do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.versao) {
+            throw new Error('Favor preencher corretamente a versão do automóvel!');
+        }
+        else if (typeof data.versao !== 'string') {
+            throw new Error('A versão do automóvel deve ser uma string válida!');
+        }
+        else if (data.versao.trim() === '') {
+            throw new Error('A versão do automóvel não pode ser um campo vazio!');
+        }
+        
+        if (!data.peso) {
+            throw new Error('Favor preencher corretamente o peso do automóvel!');
+        }
+        else if (typeof data.peso !== 'number') {
+            throw new Error('O peso do automóvel deve ser um número válido!');
+        }
+        else if (data.peso.toString().trim() === '') {
+            throw new Error('O peso do automóvel não pode ser um campo vázio!');
+        }
+        
+        if (!data.tipo_combustivel) {
+            throw new Error('Favor preencher corretamente o tipo de combustível do automóvel!');
+        }
+        else if (typeof data.tipo_combustivel !== 'string') {
+            throw new Error('O tipo de combustível do automóvel deve ser uma string válida!');
+        }
+        else if (data.tipo_combustivel.trim() === '') {
+            throw new Error('O tipo de combustível do automóvel não pode ser um campo vazio!');
         }
 
         const objId = new ObjectId(id);
@@ -177,7 +346,7 @@ export const updateCarController = async (req: Request, res: Response) => {
             data.aro,
             data.versao,
             data.peso,
-            data.abastecimento
+            data.tipo_combustivel
         );
 
         await carCollection.updateOne({
@@ -189,15 +358,18 @@ export const updateCarController = async (req: Request, res: Response) => {
         const result = await carCollection.findOne({ _id: objId });
 
         if (!result) {
-            throw new Error('Carro não encontrado! Por favor, verifique se o ID inserido está correto!');
+            res.status(404).json({
+                message: 'Carro não encontrado!'
+            });
         }
+        else {
+            const carWithoutPrefix = removePrefixFromKeys(result);
 
-        const carWithoutPrefix = removePrefixFromKeys(result);
-
-        res.status(200).json({
-            message: 'Dados atualizados com sucesso.',
-            Car: carWithoutPrefix,
-        });
+            res.status(200).json({
+                message: 'Dados atualizados com sucesso.',
+                Car: carWithoutPrefix,
+            });
+        }
     }
     catch (err) {
         res.status(404).json({
@@ -218,12 +390,14 @@ export const deleteCarController = async (req: Request, res: Response) => {
         const carCollection = db.collection('cars');
         const idCar = req.query.id as string | undefined;
 
-        if (idCar === undefined) {
+        if (!idCar) {
             throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
         }
-
-        if (idCar === null || typeof idCar !== 'string' || idCar.trim() === '') {
-            throw new Error('Id do automóvel inválido!');
+        else if (typeof idCar !== 'string') {
+            throw new Error("O 'id' do automóvel deve ser uma string válida!");
+        }
+        else if (idCar.trim() === '') {
+            throw new Error("O 'id' do automóvel não pode ser um campo vazio!");
         }
 
         const objId = new ObjectId(idCar);
@@ -232,7 +406,7 @@ export const deleteCarController = async (req: Request, res: Response) => {
 
         if (!deletedCar.value) {
             res.status(404).json({
-                message: 'Carro não encontrado!'
+                message: 'Carro não encontrado! Por favor, verifique se o ID inserido está correto!'
             });
         }
         else {

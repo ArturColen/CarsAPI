@@ -13,6 +13,11 @@ app.use(express_1.default.json());
 (0, cors_middleware_js_1.configureCORS)(app);
 app.use(error_middleware_js_1.errorMiddleware);
 app.use('/cars', cars_route_js_1.default);
+app.use((req, res) => {
+    res.status(404).json({
+        message: 'Rota não encontrada.'
+    });
+});
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { configureCORS } from './middlewares/cors-middleware.js';
 import carRouter from './routes/cars-route.js';
 import { errorMiddleware } from './middlewares/error-middleware.js';
@@ -12,6 +12,12 @@ configureCORS(app);
 app.use(errorMiddleware);
 
 app.use('/cars', carRouter);
+
+app.use((req: Request, res: Response) => {
+    res.status(404).json({
+        message: 'Rota não encontrada.'
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
