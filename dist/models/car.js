@@ -1,19 +1,58 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-class Carro {
-    constructor(nome, preco, cor, fabricante, categoria, ano_lancamento, assentos, potencia, aro, versao, peso, tipo_combustivel) {
-        this._nome = nome;
-        this._preco = preco;
-        this._cor = cor;
-        this._fabricante = fabricante;
-        this._categoria = categoria;
-        this._ano_lancamento = ano_lancamento;
-        this._assentos = assentos;
-        this._potencia = potencia;
-        this._aro = aro;
-        this._versao = versao;
-        this._peso = peso;
-        this._tipo_combustivel = tipo_combustivel;
-    }
-}
-exports.default = Carro;
+const mongoose_1 = __importDefault(require("mongoose"));
+const CarSchema = new mongoose_1.default.Schema({
+    model: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    color: {
+        type: String,
+        required: true,
+    },
+    manufacturer: {
+        type: String,
+        required: true,
+    },
+    category: {
+        type: String,
+        required: true,
+    },
+    releaseYear: {
+        type: Number,
+        required: true,
+    },
+    numberSeats: {
+        type: Number,
+        required: true,
+    },
+    enginePower: {
+        type: Number,
+        required: true,
+    },
+    rimSize: {
+        type: Number,
+        required: true,
+    },
+    version: {
+        type: String,
+        required: true,
+    },
+    weight: {
+        type: Number,
+        required: true,
+    },
+    fuelType: {
+        type: String,
+        required: true,
+    },
+});
+const Car = mongoose_1.default.model('Car', CarSchema);
+exports.default = Car;
