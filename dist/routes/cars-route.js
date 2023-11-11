@@ -8,6 +8,6 @@ const car_controller_1 = require("../controllers/car-controller");
 const carRouter = express_1.default.Router();
 carRouter.get('/', car_controller_1.findAllCarsController);
 carRouter.post('/', car_controller_1.createCarController);
-carRouter.put('/', car_controller_1.updateCarController);
-carRouter.delete('/', car_controller_1.deleteCarController);
+carRouter.put('/:id', car_controller_1.updateCarController);
+carRouter.delete('/:id', car_controller_1.deleteCarController);
 exports.default = carRouter;

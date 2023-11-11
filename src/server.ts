@@ -2,10 +2,13 @@ import express, { Request, Response } from 'express';
 import { configureCORS } from './middlewares/cors-middleware.js';
 import carRouter from './routes/cars-route.js';
 import { errorMiddleware } from './middlewares/error-middleware.js';
+const connectDatabase = require('./database/db.js');
 
 const port = 3000;
 const app = express();
 app.use(express.json());
+
+connectDatabase();
 
 configureCORS(app);
 
