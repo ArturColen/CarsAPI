@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const connectDatabase = () => {
     console.log('Wait connecting to the database');
-    mongoose.connect(`${process.env.DATABSE_URL}`)
+    mongoose.connect(`${process.env.DATABASE_URL}`)
         .then(() => console.log('MongoDB Atlas Connected'))
         .catch((error) => console.log(error));
 };
