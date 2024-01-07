@@ -4,7 +4,7 @@ import carRouter from './routes/cars-route.js';
 import { errorMiddleware } from './middlewares/error-middleware.js';
 const connectDatabase = require('./database/db.js');
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 

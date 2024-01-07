@@ -8,7 +8,7 @@ const cors_middleware_js_1 = require("./middlewares/cors-middleware.js");
 const cars_route_js_1 = __importDefault(require("./routes/cars-route.js"));
 const error_middleware_js_1 = require("./middlewares/error-middleware.js");
 const connectDatabase = require('./database/db.js');
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 connectDatabase();
