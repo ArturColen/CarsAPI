@@ -4,7 +4,7 @@ import Car from '../models/car.js';
 
 export const findAllCarsRepository = () => Car.find();
 
-export const findCarByIdRepository = (idUser: string) => Car.findById(idUser);
+export const findCarByIdRepository = (idCar: string) => Car.findById(idCar);
 
 export const createCarRepository = ({
     model,
@@ -35,9 +35,9 @@ export const createCarRepository = ({
         fuelType,
     });
 
-export const updateCarRepository = async (id: string, carData: Partial<CarInterface>): Promise<mongoose.Document | null> => {
+export const updateCarRepository = async (idCar: string, carData: Partial<CarInterface>): Promise<mongoose.Document | null> => {
     const updatedCar = await Car.findOneAndUpdate (
-        { _id: id },
+        { _id: idCar },
         { ...carData },
         { rawResult: true }
     );
@@ -45,4 +45,4 @@ export const updateCarRepository = async (id: string, carData: Partial<CarInterf
     return updatedCar;
 };
 
-export const deleteCarRepository = (id: string) => Car.findOneAndDelete({ _id: id }, { rawResult: true });
+export const deleteCarRepository = (idCar: string) => Car.findOneAndDelete({ _id: idCar }, { rawResult: true });

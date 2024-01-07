@@ -7,7 +7,7 @@ exports.deleteCarRepository = exports.updateCarRepository = exports.createCarRep
 const car_js_1 = __importDefault(require("../models/car.js"));
 const findAllCarsRepository = () => car_js_1.default.find();
 exports.findAllCarsRepository = findAllCarsRepository;
-const findCarByIdRepository = (idUser) => car_js_1.default.findById(idUser);
+const findCarByIdRepository = (idCar) => car_js_1.default.findById(idCar);
 exports.findCarByIdRepository = findCarByIdRepository;
 const createCarRepository = ({ model, price, color, manufacturer, category, releaseYear, numberSeats, enginePower, rimSize, version, weight, fuelType, }) => car_js_1.default.create({
     model,
@@ -24,10 +24,10 @@ const createCarRepository = ({ model, price, color, manufacturer, category, rele
     fuelType,
 });
 exports.createCarRepository = createCarRepository;
-const updateCarRepository = async (id, carData) => {
-    const updatedCar = await car_js_1.default.findOneAndUpdate({ _id: id }, { ...carData }, { rawResult: true });
+const updateCarRepository = async (idCar, carData) => {
+    const updatedCar = await car_js_1.default.findOneAndUpdate({ _id: idCar }, { ...carData }, { rawResult: true });
     return updatedCar;
 };
 exports.updateCarRepository = updateCarRepository;
-const deleteCarRepository = (id) => car_js_1.default.findOneAndDelete({ _id: id }, { rawResult: true });
+const deleteCarRepository = (idCar) => car_js_1.default.findOneAndDelete({ _id: idCar }, { rawResult: true });
 exports.deleteCarRepository = deleteCarRepository;

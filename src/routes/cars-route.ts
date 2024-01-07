@@ -1,9 +1,11 @@
 import express from 'express';
-import { createCarController, deleteCarController, findAllCarsController, updateCarController } from '../controllers/car-controller';
+import { findAllCarsController, findCarByIdController, createCarController, updateCarController, deleteCarController } from '../controllers/car-controller.js';
 
 const carRouter = express.Router();
 
 carRouter.get('/', findAllCarsController);
+
+carRouter.get('/search', findCarByIdController);
 
 carRouter.post('/', createCarController);
 
