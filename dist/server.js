@@ -5,16 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_middleware_js_1 = require("./middlewares/cors-middleware.js");
-const cars_route_js_1 = __importDefault(require("./routes/cars-route.js"));
 const error_middleware_js_1 = require("./middlewares/error-middleware.js");
-const connectDatabase = require('./database/db.js');
+const db_js_1 = require("./database/db.js");
+const cars_route_js_1 = require("./routes/cars-route.js");
 const port = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-connectDatabase();
+(0, db_js_1.connectDatabase)();
 (0, cors_middleware_js_1.configureCORS)(app);
 app.use(error_middleware_js_1.errorMiddleware);
-app.use('/cars', cars_route_js_1.default);
+app.use('/cars', cars_route_js_1.carRouter);
 app.use((req, res) => {
     res.status(404).json({
         message: 'Rota não encontrada.'

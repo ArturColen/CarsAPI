@@ -1,15 +1,12 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCarRepository = exports.updateCarRepository = exports.createCarRepository = exports.findCarByIdRepository = exports.findAllCarsRepository = void 0;
-const car_js_1 = __importDefault(require("../models/car.js"));
-const findAllCarsRepository = () => car_js_1.default.find();
+const car_js_1 = require("../models/car.js");
+const findAllCarsRepository = () => car_js_1.Car.find();
 exports.findAllCarsRepository = findAllCarsRepository;
-const findCarByIdRepository = (idCar) => car_js_1.default.findById(idCar);
+const findCarByIdRepository = (idCar) => car_js_1.Car.findById(idCar);
 exports.findCarByIdRepository = findCarByIdRepository;
-const createCarRepository = ({ model, price, color, manufacturer, category, releaseYear, numberSeats, enginePower, rimSize, version, weight, fuelType, }) => car_js_1.default.create({
+const createCarRepository = ({ model, price, color, manufacturer, category, releaseYear, numberSeats, enginePower, rimSize, version, weight, fuelType, }) => car_js_1.Car.create({
     model,
     price,
     color,
@@ -25,9 +22,9 @@ const createCarRepository = ({ model, price, color, manufacturer, category, rele
 });
 exports.createCarRepository = createCarRepository;
 const updateCarRepository = async (idCar, carData) => {
-    const updatedCar = await car_js_1.default.findOneAndUpdate({ _id: idCar }, { ...carData }, { rawResult: true });
+    const updatedCar = await car_js_1.Car.findOneAndUpdate({ _id: idCar }, { ...carData }, { rawResult: true });
     return updatedCar;
 };
 exports.updateCarRepository = updateCarRepository;
-const deleteCarRepository = (idCar) => car_js_1.default.findOneAndDelete({ _id: idCar }, { rawResult: true });
+const deleteCarRepository = (idCar) => car_js_1.Car.findOneAndDelete({ _id: idCar }, { rawResult: true });
 exports.deleteCarRepository = deleteCarRepository;

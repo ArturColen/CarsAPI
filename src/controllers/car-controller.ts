@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { CarInterface } from '../interfaces/car-interface';
-import * as carService from '../services/car-service';
 import { validateCarData } from '../services/carValidations-service.js';
+import { createCarService, deleteCarService, findAllCarsService, findCarByIdService, updateCarService } from '../services/car-service';
 
 export const findAllCarsController = async (req: Request, res: Response) => {
     try {
-        const cars = await carService.findAllCarsService();
+        const cars = await findAllCarsService();
 
         res.status(200).json({
             Cars: cars
@@ -23,10 +23,10 @@ export const findCarByIdController = async (req: Request, res: Response) => {
         const idCar = req.query.id as string | undefined;
 
         if (!idCar) {
-            throw new Error("O 'id' não foi fornecido na consulta.");
+            throw new Error('O "id" não foi fornecido na consulta.');
         }
 
-        const car = await carService.findCarByIdService(idCar);
+        const car = await findCarByIdService(idCar);
 
         res.status(200).json({
             Car: car
@@ -35,7 +35,7 @@ export const findCarByIdController = async (req: Request, res: Response) => {
     catch (error) {
         if (error instanceof Error && error.message.includes('Cast to ObjectId failed')) {
             res.status(400).json({
-                message: 'O ID fornecido não é válido para exibição do carro.',
+                message: 'O "id" fornecido não é válido para exibição do carro.',
             });
         } 
         else {
@@ -52,7 +52,7 @@ export const createCarController = async (req: Request, res: Response) => {
         
         validateCarData(carData);
 
-        const createdCar = await carService.createCarService(carData);
+        const createdCar = await createCarService(carData);
 
         res.status(201).json({
             message: 'Carro criado com sucesso',
@@ -72,12 +72,12 @@ export const updateCarController = async (req: Request, res: Response) => {
         const carData = req.body as CarInterface;
 
         if (!idCar) {
-            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
+            throw new Error('O parâmetro "id" não foi fornecido na consulta.');
         }
 
         validateCarData(carData);
 
-        const updatedCar = await carService.updateCarService(idCar, carData);
+        const updatedCar = await updateCarService(idCar, carData);
 
         res.status(200).json({
             message: 'Dados atualizados com sucesso.',
@@ -87,7 +87,7 @@ export const updateCarController = async (req: Request, res: Response) => {
     catch (error) {
         if (error instanceof Error && error.message.includes('Cast to ObjectId failed')) {
             res.status(400).json({
-                message: 'O ID fornecido não é válido para atualização do carro.',
+                message: 'O "id" fornecido não é válido para atualização do carro.',
             });
         } 
         else {
@@ -103,10 +103,10 @@ export const deleteCarController = async (req: Request, res: Response) => {
         const idCar = req.params.id as string | undefined;
 
         if (!idCar) {
-            throw new Error("O parâmetro 'id' não foi fornecido na consulta.");
+            throw new Error('O parâmetro "id" não foi fornecido na consulta.');
         }
 
-        await carService.deleteCarService(idCar);
+        await deleteCarService(idCar);
 
         res.status(200).json({
             message: 'Exclusão feita com sucesso!'
@@ -115,7 +115,7 @@ export const deleteCarController = async (req: Request, res: Response) => {
     catch (error) {
         if (error instanceof Error && error.message.includes('Cast to ObjectId failed')) {
             res.status(400).json({
-                message: 'O ID fornecido não é válido para exclusão do carro.',
+                message: 'O "id" fornecido não é válido para exclusão do carro.',
             });
         } 
         else {

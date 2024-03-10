@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { CarInterface } from '../interfaces/car-interface.js';
-import Car from '../models/car.js';
+import { Car } from '../models/car.js';
 
 export const findAllCarsRepository = () => Car.find();
 

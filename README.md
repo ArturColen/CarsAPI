@@ -2,7 +2,7 @@
 The project was developed with the aim of consolidating the content learned in the DevWeb2 course, focusing on creating APIs that incorporate the four main HTTP methods commonly used in this type of application: GET, POST, PUT and DELETE.
 
 ## 🔨 Project functionality
-The main purpose of the Application Programming Interface developed is to manipulate information that will be used for sharing in other projects. As such, the project performs the main operations of this type of program, i.e. listing data (GET), adding data (POST), updating data (PUT) and deleting data (DELETE).
+The main purpose of this API is to provide car information to users. So, in addition to listing this information (GET), the application can insert cars (POST), update the data of an already registered vehicle (PUT) or delete it (DELETE).
 
 ## 💻 Technologies used
 * [TypeScript](https://www.typescriptlang.org/pt/docs/): programming language developed to add advanced features to JavaScript, such as static typing and interfaces

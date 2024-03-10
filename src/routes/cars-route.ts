@@ -14,4 +14,4 @@ carRouter.put('/:id', verifyTokenInBack, updateCarController);
 
 carRouter.delete('/:id', verifyTokenInBack, deleteCarController);
 
-export default carRouter;
+export { carRouter };
