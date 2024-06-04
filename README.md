@@ -1,4 +1,4 @@
-# API project
+# CarsAPI
 The project was developed with the aim of consolidating the content learned in the DevWeb2 course, focusing on creating APIs that incorporate the four main HTTP methods commonly used in this type of application: GET, POST, PUT and DELETE.
 
 ## 🔨 Project functionality
