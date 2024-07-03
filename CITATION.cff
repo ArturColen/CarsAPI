@@ -1,0 +1,26 @@
+cff-version: 1.0.0
+message: "Please cite this software using these metadata."
+title: CarsAPI
+authors:
+  - family-names: Bomtempo Colen
+    given-names: Artur
+  - family-names: Gomes Chagas
+    given-names: Arthur
+  - family-names: Melo Sena
+    given-names: Lucas
+  - family-names: Vales
+    given-names: Olavo
+  - family-names: Melo
+    given-names: Gabriel
+keywords:
+  - Cars
+  - API
+  - CarsAPI
+  - Node.js
+  - TypeScript
+  - Express.js
+  - MongoDB
+repository-code: https://github.com/ArturColen/CarsAPI
+license: MIT
+version: 1.0.2
+date-released: 2023-11-09
